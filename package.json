@@ -1,42 +1,41 @@
 {
-  "type": "module",
-  "name": "eon-server",
-  "version": "1.0.0",
-  "description": "REST API for serving Japanese kanji and vocabulary data",
-  "main": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "start": "node --no-warnings --loader ts-paths-esm-loader --experimental-specifier-resolution=node dist/index.js",
-    "serve": "node --no-warnings --loader ts-paths-esm-loader --experimental-specifier-resolution=node src/index.ts",
-    "dev": "nodemon -e ts --exec \"npm run serve\""
-  },
-  "keywords": [
-    "rest",
-    "api",
-    "japanese",
-    "kentei",
-    "kanji",
-    "pitch",
-    "accent"
-  ],
-  "author": "Vladislav 'ithelor' Dietrich",
-  "license": "ISC",
-  "dependencies": {
-    "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.13",
-    "@types/mongoose": "^5.10.5",
-    "cors": "^2.8.5",
-    "dotenv-flow": "^3.2.0",
-    "express": "^4.18.1",
-    "mongoose": "^5.10.19"
-  },
-  "devDependencies": {
-    "@types/dotenv-flow": "^3.2.0",
-    "eslint": "^8.21.0",
-    "nodemon": "^2.0.19",
-    "ts-node": "^10.9.1",
-    "ts-paths-esm-loader": "^1.3.1",
-    "tsconfig-paths": "^4.1.2",
-    "typescript": "^4.7.4"
-  }
+    "type": "module",
+    "name": "eon-server",
+    "version": "1.0.0",
+    "description": "REST API for serving Japanese kanji and vocabulary data",
+    "author": "Vladislav 'ithelor' Dietrich",
+    "main": "index.ts",
+    "license": "MIT",
+    "scripts": {
+        "build": "tsc",
+        "start": "node --no-warnings --loader ts-paths-esm-loader --experimental-specifier-resolution=node dist/index.js",
+        "serve": "node --no-warnings --loader ts-paths-esm-loader --experimental-specifier-resolution=node src/index.ts",
+        "dev": "nodemon -e ts --exec \"npm run serve\""
+    },
+    "keywords": [
+        "rest",
+        "api",
+        "japanese",
+        "kentei",
+        "kanji",
+        "pitch",
+        "accent"
+    ],
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv-flow": "^3.2.0",
+        "express": "^4.18.1",
+        "mongoose": "^7.5.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.13",
+        "@types/dotenv-flow": "^3.2.0",
+        "@types/express": "^4.17.17",
+        "eslint": "^8.21.0",
+        "nodemon": "^2.0.19",
+        "ts-node": "^10.9.1",
+        "ts-paths-esm-loader": "^1.3.1",
+        "tsconfig-paths": "^4.1.2",
+        "typescript": "^4.7.4"
+    }
 }
