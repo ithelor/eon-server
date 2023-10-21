@@ -1,0 +1,86 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "airbnb-typescript/base",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "import", "eslint-plugin-import"],
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "tsconfigRootDir": ".",
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "settings": {
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+            "typescript": {
+                "alwaysTryTypes": true,
+                "project": "tsconfig.json"
+            }
+        }
+    },
+    "rules": {
+        "no-plusplus": "off",
+        "import/no-unresolved": "off",
+        "import/prefer-default-export": "off",
+        "no-unused-vars": ["warn", { "vars": "all", "args": "all", "ignoreRestSiblings": false }],
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            { "vars": "all", "args": "all", "ignoreRestSiblings": false }
+        ],
+        "import/order": [
+            "warn",
+            {
+                "groups": [
+                    "builtin", // import fs from 'fs'
+                    "external", // import _ from 'lodash'
+                    "type", // import type { Foo } from 'foo'
+                    "object", // import log = console.log
+                    "internal", // import foo from 'src/foo'
+                    "parent", // import foo from '../foo'
+                    "sibling", // import bar from './bar'
+                    "index" // import main from './'
+                ],
+                "pathGroups": [
+                    { "pattern": "constant/**", "group": "internal", "position": "after" },
+                    { "pattern": "domain/entity/**", "group": "internal", "position": "after" },
+                    { "pattern": "domain/models/**", "group": "internal", "position": "after" },
+                    { "pattern": "decorator/**", "group": "internal", "position": "after" },
+                    { "pattern": "helper/**", "group": "internal", "position": "after" },
+                    { "pattern": "services/**", "group": "internal", "position": "after" },
+                    { "pattern": "controller/**", "group": "internal", "position": "after" },
+                    { "pattern": "routes/**", "group": "internal", "position": "after" }
+                ]
+            }
+        ],
+        "import/no-cycle": [
+            "warn",
+            {
+                "maxDepth": 2
+            }
+        ],
+        "no-empty": [
+            "error",
+            {
+                "allowEmptyCatch": true
+            }
+        ],
+        "spaced-comment": "warn",
+        "no-underscore-dangle": "off",
+        "consistent-return": "off",
+        "max-classes-per-file": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "newline-before-return": "error",
+        "@typescript-eslint/no-redeclare": "off",
+        "arrow-body-style": "off"
+    }
+}

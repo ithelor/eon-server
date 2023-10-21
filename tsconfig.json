@@ -1,16 +1,17 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "outDir": "./dist",
-    "baseUrl": "./src",
-    "strict": true,
-    "allowJs": false,
-    "noImplicitAny": true,
-    "allowSyntheticDefaultImports": true,
-    "removeComments": true,
-    "sourceMap": true
-  }
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "baseUrl": "./src",
+        "strict": true,
+        "allowJs": false,
+        "noImplicitAny": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "sourceMap": true
+    }
 }

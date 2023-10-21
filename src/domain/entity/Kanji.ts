@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export default interface IKanji extends Document {
+export default interface Kanji extends Document {
     index: number;
     kanji: string;
     onyomi: string;
