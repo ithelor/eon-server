@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose';
-import type IKanji from 'interfaces/Kanji.interface';
+import { KANJI_COLLECTION } from 'constant/env';
+import Kanji from 'domain/entity/Kanji';
 
-const KanjiSchema = new Schema<IKanji>(
+const KanjiSchema = new Schema<Kanji>(
     {
         index: Number,
         kanji: String,
@@ -13,8 +14,8 @@ const KanjiSchema = new Schema<IKanji>(
         level: Number,
     },
     {
-        collection: 'kanji-kentei',
+        collection: KANJI_COLLECTION,
     },
 );
 
-export default model<IKanji>('Kanji', KanjiSchema);
+export default model<Kanji>('Kanji', KanjiSchema);
