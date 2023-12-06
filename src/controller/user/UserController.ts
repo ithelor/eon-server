@@ -1,14 +1,35 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from 'constant/env';
 import User from 'domain/models/User';
-import handleServiceError from 'decorator/handleServiceError';
+import handleControllerError from 'decorator/handleControllerError';
 
 export default class UserController {
-    @handleServiceError
+    @handleControllerError
     static async register(req: Request, res: Response) {
         const password = await bcrypt.hash(req.body.password, 10);
         const user = await User.create({ ...req.body, password });
 
         res.json(user);
+    }
+
+    @handleControllerError
+    static async login(req: Request, res: Response) {
+        const user = await User.findOne({ username: req.body.username });
+        if (!user) {
+            return res.status(400).json({ error: "User doesn't exist" });
+        }
+
+        const result = await bcrypt.compare(req.body.password, user.password);
+        if (!result) {
+            return res.status(400).json({ error: "Password doesn't match" });
+        }
+
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+            expiresIn: '1 hour',
+        });
+
+        res.json({ token });
     }
 }
