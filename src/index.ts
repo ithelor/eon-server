@@ -7,6 +7,8 @@ import { CLIENT_URL, MONGO_URI, PORT } from 'constant/env';
 const app = express();
 
 app.use(cors({ origin: CLIENT_URL }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use('/api', apiRouter);
 
 try {
