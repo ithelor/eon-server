@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'constant/env';
-import User from 'domain/models/User';
+import User from 'domain/model/User';
 import handleControllerError from 'decorator/handleControllerError';
 import UserService from 'services/UserService';
 

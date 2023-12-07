@@ -53,7 +53,7 @@
                 "pathGroups": [
                     { "pattern": "constant/**", "group": "internal", "position": "after" },
                     { "pattern": "domain/entity/**", "group": "internal", "position": "after" },
-                    { "pattern": "domain/models/**", "group": "internal", "position": "after" },
+                    { "pattern": "domain/model/**", "group": "internal", "position": "after" },
                     { "pattern": "decorator/**", "group": "internal", "position": "after" },
                     { "pattern": "helper/**", "group": "internal", "position": "after" },
                     { "pattern": "services/**", "group": "internal", "position": "after" },

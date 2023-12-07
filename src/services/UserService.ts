@@ -1,5 +1,5 @@
 import User from 'domain/entity/User';
-import UserModel from 'domain/models/User';
+import UserModel from 'domain/model/User';
 import handleServiceError from 'decorator/handleServiceError';
 import AbstractService from './AbstractService';
 

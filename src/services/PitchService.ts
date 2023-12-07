@@ -1,6 +1,6 @@
 import Pitch from 'domain/entity/Pitch';
 import PaginationFilter from 'domain/entity/PaginationFilter';
-import PitchModel from 'domain/models/Pitch';
+import PitchModel from 'domain/model/Pitch';
 import handleServiceError from 'decorator/handleServiceError';
 import AbstractService from './AbstractService';
 

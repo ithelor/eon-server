@@ -1,6 +1,6 @@
 import Kanji from 'domain/entity/Kanji';
 import PaginationFilter from 'domain/entity/PaginationFilter';
-import KanjiModel from 'domain/models/Kanji';
+import KanjiModel from 'domain/model/Kanji';
 import handleServiceError from 'decorator/handleServiceError';
 import AbstractService from './AbstractService';
 
