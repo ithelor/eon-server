@@ -7,8 +7,15 @@ export default class PitchController {
     @handleControllerError
     static async getPitches(req: Request, res: Response) {
         const paginationFilter = parsePaginationQuery(req);
-        const pitch = await PitchService.getPitch(paginationFilter);
+        const pitch = await PitchService.getPitches(paginationFilter);
 
         res.json(pitch);
+    }
+
+    @handleControllerError
+    static async getPitch(req: Request, res: Response) {
+        const result = await PitchService.getPitch(req.params.expression);
+
+        res.json(result);
     }
 }
