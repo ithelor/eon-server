@@ -4,8 +4,15 @@ import User from 'domain/entity/User';
 
 const UserSchema = new Schema<User>(
     {
-        username: String,
-        password: String,
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
     },
     {
         collection: USER_COLLECTION,

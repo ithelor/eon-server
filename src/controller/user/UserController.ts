@@ -4,14 +4,22 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from 'constant/env';
 import User from 'domain/models/User';
 import handleControllerError from 'decorator/handleControllerError';
+import UserService from 'services/UserService';
 
 export default class UserController {
     @handleControllerError
+    static async getUser(req: Request, res: Response) {
+        const result = await UserService.getUser(req.body.user._id);
+
+        res.json(result);
+    }
+
+    @handleControllerError
     static async register(req: Request, res: Response) {
         const password = await bcrypt.hash(req.body.password, 10);
-        const user = await User.create({ ...req.body, password });
+        const result = await User.create({ ...req.body, password });
 
-        res.json(user);
+        res.json(result);
     }
 
     @handleControllerError
