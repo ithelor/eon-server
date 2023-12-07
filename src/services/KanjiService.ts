@@ -8,13 +8,20 @@ export default class KanjiService implements AbstractService {
     @handleServiceError
     static async getKanji(filter: PaginationFilter): Promise<Kanji[]> {
         const { pageSize, pageNumber } = filter;
-        const kanji = await KanjiModel.find()
+        const result = await KanjiModel.find()
             .select('-_id')
             .skip((pageNumber - 1) * pageSize)
             .limit(pageSize)
             .orFail()
             .exec();
 
-        return kanji;
+        return result;
+    }
+
+    @handleServiceError
+    static async getSingleKanji(kanji: string): Promise<Kanji> {
+        const result = await KanjiModel.findOne({ kanji }).select('-_id').orFail().exec();
+
+        return result;
     }
 }

@@ -7,8 +7,15 @@ export default class KanjiController {
     @handleControllerError
     static async getKanji(req: Request, res: Response) {
         const paginationFilter = parsePaginationQuery(req);
-        const kanji = await KanjiService.getKanji(paginationFilter);
+        const result = await KanjiService.getKanji(paginationFilter);
 
-        res.json(kanji);
+        res.json(result);
+    }
+
+    @handleControllerError
+    static async getSingleKanji(req: Request, res: Response) {
+        const result = await KanjiService.getSingleKanji(req.params.kanji);
+
+        res.json(result);
     }
 }
