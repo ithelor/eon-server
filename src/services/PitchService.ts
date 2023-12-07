@@ -6,15 +6,22 @@ import AbstractService from './AbstractService';
 
 export default class PitchService implements AbstractService {
     @handleServiceError
-    static async getPitch(filter: PaginationFilter): Promise<Pitch[]> {
+    static async getPitches(filter: PaginationFilter): Promise<Pitch[]> {
         const { pageNumber, pageSize } = filter;
-        const pitch = await PitchModel.find()
+        const result = await PitchModel.find()
             .select('-_id')
             .skip((pageNumber - 1) * pageSize)
             .limit(pageSize)
             .orFail()
             .exec();
 
-        return pitch;
+        return result;
+    }
+
+    @handleServiceError
+    static async getPitch(expression: string): Promise<Pitch> {
+        const result = await PitchModel.findOne({ expression }).select('-_id').orFail().exec();
+
+        return result;
     }
 }
