@@ -4,7 +4,7 @@ import User from 'domain/entity/User';
 
 const UserSchema = new Schema<User>(
     {
-        username: {
+        email: {
             type: String,
             required: true,
             unique: true,
