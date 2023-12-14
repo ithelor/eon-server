@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { USER_COLLECTION } from 'constant/env';
-import User from 'domain/entity/User';
+import User from 'domain/entity/user/User';
 
 const UserSchema = new Schema<User>(
     {
