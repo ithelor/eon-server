@@ -14,7 +14,7 @@ app.use(cors({ origin: CLIENT_URL }));
 app.use('/api', apiRouter);
 
 try {
-    await connect(MONGO_URI!);
+    await connect(MONGO_URI);
 
     app.listen(PORT, () => console.log(`App is running at ${PORT}...`));
 } catch (error) {

@@ -4,7 +4,7 @@ dotenvFlow.config();
 
 export const PORT = process.env.PORT;
 export const CLIENT_URL = process.env.CLIENT_URL;
-export const MONGO_URI = process.env.MONGO_URI;
+export const MONGO_URI = process.env.MONGO_URI ?? '';
 export const JWT_SECRET = process.env.JWT_SECRET ?? '';
 export const JWT_ACCESS_EXPIRATION = Number(process.env.JWT_ACCESS_EXPIRATION);
 export const JWT_REFRESH_EXPIRATION = Number(process.env.JWT_REFRESH_EXPIRATION);
