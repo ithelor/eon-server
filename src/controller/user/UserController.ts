@@ -12,7 +12,8 @@ import UserService from 'services/UserService';
 export default class UserController {
     @handleControllerError
     static async getUser(req: Request, res: Response) {
-        const result = await UserService.getUser(req.body.user.id);
+        const { user } = req.body;
+        const result = await UserService.getUser(user._id);
 
         res.json(result);
     }
@@ -37,8 +38,8 @@ export default class UserController {
     @handleControllerError
     static async login(req: Request<never, never, UserEntity>, res: Response) {
         const { email, password } = req.body;
-
         const user = await User.findOne({ email });
+
         if (!user) {
             res.status(400).json({ error: "User doesn't exist" });
 
@@ -63,6 +64,7 @@ export default class UserController {
     @handleControllerError
     static async refresh(req: Request, res: Response) {
         const { refreshToken: requestToken } = req.cookies;
+
         if (!requestToken) {
             res.status(401).json({ error: 'No refresh token provided' });
 
