@@ -1,43 +1,91 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from 'constant/env';
-import User from 'domain/model/User';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import getIsEmail from 'validator/lib/isEmail';
+import { JWT_ACCESS_EXPIRATION, JWT_SECRET } from 'constant/env';
+import UserEntity from 'domain/entity/user/User';
+import User from 'domain/model/UserModel';
+import RefreshToken from 'domain/model/RefreshTokenModel';
 import handleControllerError from 'decorator/handleControllerError';
 import UserService from 'services/UserService';
 
 export default class UserController {
     @handleControllerError
     static async getUser(req: Request, res: Response) {
-        const result = await UserService.getUser(req.body.user._id);
+        const result = await UserService.getUser(req.body.user.id);
 
         res.json(result);
     }
 
     @handleControllerError
-    static async register(req: Request, res: Response) {
-        const password = await bcrypt.hash(req.body.password, 10);
-        const result = await User.create({ ...req.body, password });
+    static async register(req: Request<never, never, UserEntity>, res: Response) {
+        const { email, password } = req.body;
+        const isEmail = getIsEmail(email);
 
-        res.json(result);
+        if (!isEmail) {
+            res.status(400).json({ error: 'Email is invalid' });
+
+            return;
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({ email, password: hashedPassword });
+
+        res.json(user);
     }
 
     @handleControllerError
-    static async login(req: Request, res: Response) {
-        const user = await User.findOne({ username: req.body.username });
+    static async login(req: Request<never, never, UserEntity>, res: Response) {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ error: "User doesn't exist" });
+            res.status(400).json({ error: "User doesn't exist" });
+
+            return;
         }
 
-        const result = await bcrypt.compare(req.body.password, user.password);
-        if (!result) {
-            return res.status(400).json({ error: "Password doesn't match" });
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            res.status(401).json({ error: "Password doesn't match" });
+
+            return;
         }
 
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, {
-            expiresIn: '1 hour',
-        });
+        const accessToken = jwt.sign({ user }, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION });
+        const refreshToken = await UserService.createRefreshToken(user);
 
-        res.json({ token });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
+            .header('Authorization', accessToken)
+            .send(user);
+    }
+
+    @handleControllerError
+    static async refresh(req: Request, res: Response) {
+        const { refreshToken: requestToken } = req.cookies;
+        if (!requestToken) {
+            res.status(401).json({ error: 'No refresh token provided' });
+
+            return;
+        }
+
+        const refreshToken = await RefreshToken.findOne({ token: requestToken });
+        if (!refreshToken) {
+            res.status(403).json({ error: 'Refresh token not found' });
+
+            return;
+        }
+
+        const isRefreshTokenExpired = await UserService.handleExpiration(refreshToken);
+        if (isRefreshTokenExpired) {
+            res.status(403).json({ error: 'Refresh token has expired' });
+
+            return;
+        }
+
+        const { user } = jwt.verify(refreshToken.token, JWT_SECRET) as JwtPayload;
+        const accessToken = jwt.sign({ user }, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION });
+
+        res.header('Authorization', accessToken).json({ user });
     }
 }
