@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import { JWT_REFRESH_EXPIRATION, JWT_SECRET } from 'constant/env';
 import User from 'domain/entity/user/User';
 import RefreshTokenEntity from 'domain/entity/user/RefreshToken';
-import UserModel from 'domain/model/User';
-import RefreshToken from 'domain/model/RefreshToken';
+import UserModel from 'domain/model/UserModel';
+import RefreshToken from 'domain/model/RefreshTokenModel';
 import handleServiceError from 'decorator/handleServiceError';
 import AbstractService from './AbstractService';
 

@@ -4,8 +4,8 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import getIsEmail from 'validator/lib/isEmail';
 import { JWT_ACCESS_EXPIRATION, JWT_SECRET } from 'constant/env';
 import UserEntity from 'domain/entity/user/User';
-import User from 'domain/model/User';
-import RefreshToken from 'domain/model/RefreshToken';
+import User from 'domain/model/UserModel';
+import RefreshToken from 'domain/model/RefreshTokenModel';
 import handleControllerError from 'decorator/handleControllerError';
 import UserService from 'services/UserService';
 
