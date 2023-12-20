@@ -4,6 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import getIsEmail from 'validator/lib/isEmail';
 import { JWT_ACCESS_EXPIRATION, JWT_SECRET } from 'constant/env';
 import UserEntity from 'domain/entity/user/User';
+import RoleEnum from 'domain/entity/user/RoleEnum';
 import User from 'domain/model/UserModel';
 import RefreshToken from 'domain/model/RefreshTokenModel';
 import handleControllerError from 'decorator/handleControllerError';
@@ -30,7 +31,7 @@ export default class UserController {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ email, password: hashedPassword });
+        const user = await User.create({ email, password: hashedPassword, roles: RoleEnum.User });
 
         res.json(user);
     }
